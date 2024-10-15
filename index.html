@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relations Between Education and Crime</title>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+    <link rel="stylesheet" type="text/css" href="css/styles.css" media="all">
+</head>
+
+<body>
+    <div class="page">
+        <h1>Relations Between Education and Crime</h1>
+        <p class="text-center">
+            Are there any relationships between crime and education? This dashboard explores a series of visualizations that aim to uncover potential connections between these two areas.
+            This topic is especially relevant to educators, policymakers, and students who are concerned with understanding how social factors like education impact crime. 
+            By gaining insights into these relationships, stakeholders can better design educational programs and policies that could help reduce crime rates and create safer communities.
+        </p>
+
+        <div class="grid-horizontal">
+            <div class="grid-vertical">
+                <div id="choropleth_map" class="container"></div>
+            </div>
+            <div class="grid-vertical">
+                <h2>
+                    How does Australia compare with other countries?
+                </h2>
+                <p class="text-right">
+                    The first visualization presents a choropleth map displaying the Crime and Safety Index for countries worldwide. From this map, we can clearly observe that continents 
+                    such as South America and Africa have a noticeably higher crime index, indicating these regions are less safe. On the other hand, nearly all countries in Europe stand 
+                    out for their low crime index, with values under 40, reflecting a much safer environment.
+                    <br> <br>
+                    When comparing Australia to the rest of the world, it falls somewhere in the middle with a crime index of 46.27. This places Australia in a position where there is room 
+                    for improvement. Could enhancing education in Australia play a role in reducing the crime rate?
+                </p>
+            </div>
+        </div>
+
+        <div class="grid-horizontal">
+            <div class="grid-vertical">
+                <div id="proportional_map" class="container"></div>
+            </div>
+            <div class="grid-vertical">
+                <div id="stacked_bar_chart" class="container"></div>
+            </div>
+        </div>
+
+        <h2>
+            School Count and Population
+        </h2>
+        <div class="grid-horizontal">
+            
+            <p class="text-center">
+                The first visualization is a proportional symbol map of Australia, illustrating the distribution of schools across various regions. From the map, it is 
+                evident that New South Wales has the highest concentration of schools, followed closely by Victoria and Queensland. In contrast, the rest of Australia 
+                exhibits a significantly lower number of schools, particularly in the northern and western regions, such as the Northern Territory and South Australia. This could be because 
+                these regions have lower populations and are largely dominated by natural landscapes like forests and deserts. Tasmania, with its smaller land mass, also shows a 
+                limited number of schools due to its reduced population.
+                <br> <br>
+                The second visualization is a stacked bar chart that breaks down the population of Australia by gender, showcasing the enrollment figures across different types of 
+                educational institutions. Here, the combined enrollment in "Primary" and "Secondary schools" stands out, suggesting a substantial number of young juveniles in the population. 
+                Meanwhile, "University or higher education" and "Tertiary" levels also show a decent number of enrollments, indicating a well-educated segment of the population.
+                <br>
+                When we examine the gender distribution, there is a relatively balanced enrollment between males and females, with a slight tilt towards males. This trend may reflect a 
+                broader demographic reality in Australia, where males outnumber females in certain age groups.
+            </p>
+        </div>
+
+        <div class="grid-horizontal">
+            <div class="grid-vertical">
+                <div id="scatter" class="container"></div>
+            </div>
+            <div class="grid-vertical">
+                <h2>
+                    How to understand this graph?
+                </h2>
+                <p class="text-right">
+                    <b>Y-Axis:</b> This axis represents the crime rate, where a higher position indicates that the crime is committed more frequently. <br>
+                    <b>X-Axis:</b> This axis indicates the enrollment percentage for the highest level of education attained. A higher placement on this axis suggests a greater percentage of the population with that level of education.<br>
+                    <b>Circle Size:</b> The size of each circle reflects the number of incidents for that type of crime within each region, allowing us to assess the volume of crime committed. <br>
+                    <b>Tooltips:</b> Hovering over each bubble will reveal the specific region, providing context for the data represented.
+                </p>
+            </div>
+        </div>
+        <h2>
+            Crime Rate vs. Highest level of Education Attainment
+        </h2>
+        <p class="text-center">
+            In terms of findings, it is anticipated that secondary education would have the highest enrollment percentage, as most individuals are likely to complete at least this level of schooling. The data also reveals that the Bachelors 
+            degree enrollment exhibits a wider spread compared to other educational levels, indicating a considerable number of people pursuing higher education.
+            Analyzing the overall cluster, we observe a significant trend: regions with a lower percentage of educational attainment tend to experience higher crime rates. This correlation underscores the potential link between education and crime, 
+            suggesting that increasing educational opportunities may help mitigate crime in affected areas.
+        </p>
+
+        <div class="grid-horizontal">
+            <div class="grid-vertical">
+                <h2>
+                    Trends in Crime Rates Over the Years
+                </h2>
+                <p class="text-right">
+                    The area chart illustrates the trends of various types of crimes committed throughout the years. A notable observation is that between 2009 and 2012, theft emerged as the most prevalent crime, significantly surpassing all other offenses. 
+                    However, post-2012, we witness a remarkable decline in theft incidents, suggesting that various factors—potentially including increased education or community initiatives—may have contributed to this positive trend. By 2016, theft is no longer 
+                    the most common offense; it is surpassed by "Acts intended to cause injury." Unfortunately, this category shows no signs of improvement, with the offense rate remaining consistent over the years.<br>
+                    The chart further reveals that the other types of crimes remain relatively stable, with minimal fluctuations, except for "Miscellaneous offenses," which experiences random small spikes in 2012 and 2021.
+                    <br> <br>
+                    Beneath this main chart, a smaller area chart compares all offenders to youth offenders. While the proportion of youth offenders is relatively small, it highlights a critical area for improvement, with hopes that this number will decrease over time. 
+                    <b>This smaller chart also features a brushing tool, enabling users to manipulate and filter the main graph above for a more in-depth analysis of the data.</b>
+                </p>
+            </div>
+            <div class="grid-vertical">
+                <div id="areachart" class="container"></div>
+            </div>
+        </div>
+        
+
+        <h1>
+            Conclusion
+        </h1>
+        <p class="text-center">
+            By utilizing various visualizations, we have highlighted key trends and insights that underscore the importance of education as a potential lever for reducing crime rates. The data suggests that while Australia demonstrates areas of strength, particularly in educational enrollment, 
+            there remains significant room for improvement in both access to education and addressing crime.
+            <br> <br>
+            Ultimately, the findings encourage further dialogue among policymakers, educators, and community stakeholders about the vital role that education plays in fostering safer communities. By prioritizing educational initiatives, we can aim to create a 
+            positive impact on crime rates and improve overall societal well-being.
+        </p>
+
+        <footer>
+            <div class="footer-text">
+                This dashboard is created by <a href="https://github.com/jngyii/Data-Visualisation-2" style="color: white;">Jing Yi Chan</a>(33476772)<br>
+                All data is provided by the Australian Bureau of Statistics.
+            </div>
+        </footer>
+        
+    </div>
+    
+
+    <script>
+        vegaEmbed('#stacked_bar_chart', 'js/stacked_bar_chart.vg.json', {renderer: "svg", actions: false}).then(function(result) {
+            console.log('Stacked bar chart rendered successfully');
+        }).catch(console.error);
+
+        vegaEmbed('#choropleth_map', 'js/choropleth_map.vg.json', {renderer: "svg", actions: false}).then(function(result) {
+            console.log('Choropleth map rendered successfully');
+        }).catch(console.error);
+
+        vegaEmbed('#proportional_map', 'js/proportional_map.vg.json', {renderer: "svg", actions: false}).then(function(result) {
+            console.log('Proportional map rendered successfully');
+        }).catch(console.error);
+
+        vegaEmbed('#scatter', 'js/scatter.vg.json', {renderer: "svg", actions: false}).then(function(result) {
+            console.log('Scatter plot rendered successfully');
+        }).catch(console.error);
+
+        vegaEmbed('#areachart', 'js/areachart.vg.json', {renderer: "svg", actions: false}).then(function(result) {
+            console.log('Area chart rendered successfully');
+        }).catch(console.error);
+    </script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+  <title>Stacked Bar Chart</title>
+</head>
+<body>
+  <div id="vis"></div>
+  <script>
+    const spec = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Total School Enrollments by Gender",
+    "fontSize": 18,
+    "dy": -80
+  },
+  "width": 400,
+  "height": 250,
+  "data": {
+    "url": "https://raw.githubusercontent.com/jngyii/FIT3179/refs/heads/main/data%20for%20assignment2/Type%20of%20education%20institution%20by%20sex.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {
+      "filter": "datum.Gender !== 'Persons'"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "Type",
+      "type": "ordinal",
+      "title": "School Type",
+      "axis": {
+        "labelAngle": -15,
+        "tickCount": 7
+      }
+    },
+    "y": {
+      "aggregate": "sum",
+      "field": "Enrollment",
+      "type": "quantitative",
+      "title": "Total Enrollment",
+      "axis": {
+        "tickCount": 5
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": "bar",
+      "selection": {
+        "gender_filter": {
+          "type": "single",
+          "fields": ["Gender"],
+          "bind": "legend"
+        }
+      },
+      "transform": [
+        {
+          "filter": {
+            "selection": "gender_filter"
+          }
+        }
+      ],
+      "encoding": {
+        "color": {
+          "condition": {
+            "selection": "gender_filter",
+            "field": "Gender",
+            "type": "nominal",
+            "scale": {
+              "domain": ["Males", "Females"],
+              "range": ["#CF9FFF", "#aec6ff"]
+            }
+          },
+          "value": "lightgray"
+        },
+        "tooltip": [
+          { "field": "Type", "type": "ordinal", "title": "School Type" },
+          { "field": "Gender", "type": "nominal", "title": "Gender" },
+          { "field": "Enrollment", "type": "quantitative", "title": "Enrollment" }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "dy": -10,
+        "align": "center",
+        "fontSize": 12
+      },
+      "transform": [
+        {
+          "filter": {
+            "selection": "gender_filter"
+          }
+        }
+      ],
+      "encoding": {
+        "text": {
+          "aggregate": "sum",
+          "field": "Enrollment",
+          "type": "quantitative"
+        },
+        "x": {
+          "field": "Type",
+          "type": "ordinal"
+        },
+        "y": {
+          "aggregate": "sum",
+          "field": "Enrollment",
+          "type": "quantitative"
+        }
+      }
+    }
+  ]
+};
+
+    vegaEmbed("#vis", spec).then(console.log).catch(console.warn);
+  </script>
+</body>
+</html>

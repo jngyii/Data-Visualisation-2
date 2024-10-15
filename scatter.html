@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+  <title>Offender Rate vs. Education Enrollment by State (2023)</title>
+</head>
+<body>
+  <div id="vis"></div>
+  <script>
+    const spec = {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "width": 800,
+      "height": 500,
+      "title": "Offender Rate vs. Education Enrollment Percentage by State (2023)",
+      "data": {
+        "url": "https://raw.githubusercontent.com/jngyii/FIT3179/refs/heads/main/data%20for%20assignment2/crime%20rate%20and%20highest%20level%20edu.csv"
+      },
+      "transform": [
+        {
+          "filter": "(datum['Crime type'] !== 'Total') && (datum['Level of education'] !== 'Total') && (datum['Crime type'] !== 'Acts intended to cause injury')"
+        },
+        {
+          "filter": "datum['Number of enrollment'] != null && datum['Number of enrollment'] != ''"
+        },
+        {
+          "calculate": "datum['Number of enrollment'] / 25000000 * 100",
+          "as": "Enrollment_Percentage"
+        }
+      ],
+      "mark": "circle",
+      "selection": {
+        "level_highlight": {
+          "type": "multi",
+          "fields": ["Level of education"],
+          "bind": "legend"
+        }
+      },
+      "encoding": {
+        "x": {
+          "field": "Enrollment_Percentage",
+          "type": "quantitative",
+          "title": "Enrollment Percentage",
+          "axis": {
+            "format": ".1f",
+            "tickCount": 7
+          }
+        },
+        "y": {
+          "field": "Offender rate per 100,000 people",
+          "type": "quantitative",
+          "title": "Offender rate per 100,000 people",
+          "axis": {
+            "tickCount": 6
+          }
+        },
+        "color": {
+          "field": "Level of education",
+          "type": "nominal",
+          "title": "Level of Education"
+        },
+        "size": {
+          "field": "Offender rate per 100,000 people",
+          "type": "quantitative",
+          "title": "Offender rate",
+          "scale": {"range": [20, 2000]}
+        },
+        "opacity": {
+          "condition": {"selection": "level_highlight", "value": 0.8},
+          "value": 0.1
+        },
+        "tooltip": [
+          {"field": "State", "type": "nominal", "title": "State"},
+          {"field": "Crime type", "type": "nominal", "title": "Crime type"},
+          {"field": "Level of education", "type": "nominal", "title": "Education Level"},
+          {"field": "Enrollment_Percentage", "type": "quantitative", "title": "Enrollment Percentage", "format": ".2f"},
+          {"field": "Offender rate per 100,000 people", "type": "quantitative", "title": "Offender Rate", "format": ".1f"}
+        ]
+      }
+    };
+
+    vegaEmbed("#vis", spec).then(console.log).catch(console.warn);
+  </script>
+</body>
+</html>

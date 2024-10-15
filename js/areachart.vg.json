@@ -1,0 +1,164 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "vconcat": [
+        {
+            "width": 800,
+            "height": 400,
+            "data": {
+                "url": "https://raw.githubusercontent.com/jngyii/FIT3179/refs/heads/main/data%20for%20assignment2/Youth.csv",
+                "format": {"type": "csv"}
+            },
+            "transform": [
+                {
+                "filter": "datum.region === 'Australia'"
+                },
+                {
+                "filter": "datum.offence !== 'Total' && datum.offence !== 'All offenders' && datum.offence !== 'Youth offenders'"
+                },
+                {
+                "fold": ["2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021"],
+                "as": ["year", "count"]
+                },
+                {
+                "calculate": "toDate(datum.year + '-01-01')",
+                "as": "year_date"
+                },
+                {
+                "calculate": "toNumber(datum.count)",
+                "as": "count_num"
+                },
+                {
+                  "filter": {"param": "brush", "field": "year_date"}
+                }
+            ],
+            "mark": {
+                "type": "area",
+                "opacity": 0.5,
+                "interpolate": "monotone",
+                "tooltip": true
+            },
+            "selection": {
+                "level_highlight": {
+                "type": "multi",
+                "fields": ["offence"],
+                "bind": "legend"
+                }
+            },
+            "encoding": {
+                "x": {
+                "field": "year_date",
+                "type": "temporal",
+                "title": "Year",
+                "axis": {
+                "format": "%Y",
+                "labelAngle": 0,
+                "scale": {"domain": {"param": "brush"}},
+                "tickCount": 7
+                }
+                },
+                "y": {
+                "field": "count_num",
+                "type": "quantitative",
+                "title": "Number of Offences",
+                "stack": null,
+                "axis": {
+                    "tickCount": 6
+                }
+                },
+                "color": {
+                "field": "offence",
+                "type": "nominal",
+                "title": "Offence Type",
+                "scale": {
+                    "scheme": "category20"
+                },
+                "legend": {
+                    "values": ["Theft","Acts intended to cause injury","Abduction/harassment","Public order offences","Property damage and environmental pollution","Unlawful entry with intent",
+                        "Illicit drug offences","Miscellaneous offences","Offences against justice","Robbery/extortion","Sexual assault and related offences","Weapons/explosives",
+                        "Fraud/deception","Dangerous/negligent acts","Homicide and related offences"
+                    ],
+                    "orient": "top-right"
+                    }
+                },
+                "opacity": {
+                "condition": {"selection": "level_highlight", "value": 0.7},
+                "value": 0.05
+                },
+                "tooltip": [
+                {"field": "year", "type": "ordinal", "title": "Year"},
+                {"field": "offence", "type": "nominal", "title": "Offence Type"},
+                {"field": "count_num", "type": "quantitative", "title": "Number of Offences"}
+                ]
+            },
+            "title": {
+              "text": "Number of Offences Committed Over the Years (2009-2021)",
+              "fontSize": 18
+            },
+            "config": {
+                "axis": {
+                "labelFontSize": 12,
+                "titleFontSize": 14
+                },
+                "legend": {
+                "labelFontSize": 12,
+                "titleFontSize": 14
+                }
+            }
+        },
+        {
+        "width": 800,
+        "height": 100,
+        "data": {
+          "url": "https://raw.githubusercontent.com/jngyii/FIT3179/refs/heads/main/data%20for%20assignment2/Youth.csv",
+          "format": {"type": "csv"}
+        },
+        "transform": [
+          {"filter": "datum.region === 'Australia'"},
+          {"filter": "datum.offence === 'All offenders' || datum.offence === 'Youth offenders'"},
+          {
+            "fold": ["2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021"],
+            "as": ["year", "count"]
+          },
+          {"calculate": "toNumber(datum.count)", "as": "count_num"},
+          {"calculate": "toDate(datum.year + '-01-01')", "as": "year_date"}
+        ],
+        "mark": {
+          "type": "area",
+          "opacity": 0.5,
+          "interpolate": "monotone"
+        },
+        "params": [
+          {
+            "name": "brush", "select": {"type": "interval"},
+            "encodings": ["x"]
+          }
+        ],
+        "encoding": {
+          "x": {
+            "field": "year_date", 
+            "type": "temporal", 
+            "title": "Year",
+            "axis": {"format": "%Y"},
+            "labelAngle": 0
+          },
+          "y": {"field": "count_num", "type": "quantitative", "title": "Number of Offences"},
+          "color": {
+            "field": "offence",
+            "type": "nominal",
+            "title": "Offence Type",
+            "scale": {"scheme": "category20"}
+          },
+          "tooltip": [
+            {"field": "year", "type": "ordinal", "title": "Year"},
+            {"field": "offence", "type": "nominal", "title": "Offence Type"},
+            {"field": "count_num", "type": "quantitative", "title": "Number of Offences"}
+          ]
+        },
+        "title": {
+          "text": "All offenders vs. Youth Offenders",
+          "fontSize": 16
+        }
+      }
+    ]
+    
+  }
